@@ -1,6 +1,10 @@
 /*
  * Create a list that holds all of your cards
  */
+// let cards = ['diamond', 'paper-plane-o', 'anchor', 'bolt', 
+// 'cube', 'anchor', 'leaf', 'bicycle', 'diamond', 'bomb', 'leaf', 
+// 'bomb', 'bolt', 'bicycle', 'paper-plane-o', 'cube'];
+
 let cards = ['fa fa-diamond', 'fa fa-paper-plane-o', 'fa fa-anchor', 'fa fa-bolt', 
 'fa fa-cube', 'fa fa-anchor', 'fa fa-leaf', 'fa fa-bicycle', 'fa fa-diamond', 'fa fa-bomb', 'fa fa-leaf', 
 'fa fa-bomb', 'fa fa-bolt', 'fa fa-bicycle', 'fa fa-paper-plane-o', 'fa fa-cube'];
@@ -13,12 +17,13 @@ let cards = ['fa fa-diamond', 'fa fa-paper-plane-o', 'fa fa-anchor', 'fa fa-bolt
  */
 let myCards = shuffle(cards);
 
-let open = [];
+let opened = [];
 
 let winCount = 0;
 
+//add cards dynamically
 for(let i = 0; i < myCards.length; i++){
-    $(".deck").append("<li class='card'<i class=" + myCards[i] + "></i></li>");
+    $(".deck").append('<li class="card"><i class="' + myCards[i] + '"></i></li>');
 }
 
 
@@ -49,16 +54,28 @@ function shuffle(array) {
  *    + if all cards have matched, display a message with the final score (put this functionality in another function that you call from this one)
  */
 
+ $(document).ready(function() {
+    displayCard();
+ });
+
+
 
 //display a card
 function displayCard () {
-	$(this).click(function () {
-		$(this).className = "card open show";
-	});
+    $(".card").click(function () {
+        let card = $(this).children().attr("class");
+        $(this).removeClass().addClass("card open show");
+        addCard(card);
+    });
  }
 
 
  //add the card to open array
- function addCard () {
+ function addCard (card) {
+    opened.push(card);
+    console.log(opened);
+ }
 
+ function checkForMatch () {
+    
  }
