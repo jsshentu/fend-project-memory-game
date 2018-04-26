@@ -13,8 +13,13 @@ let cards = ['fa fa-diamond', 'fa fa-paper-plane-o', 'fa fa-anchor', 'fa fa-bolt
  */
 let myCards = shuffle(cards);
 
+let open = [];
 
+let winCount = 0;
 
+for(let i = 0; i < myCards.length; i++){
+    $(".deck").append("<li class='card'<i class=" + myCards[i] + "></i></li>");
+}
 
 
 // Shuffle function from http://stackoverflow.com/a/2450976
@@ -43,3 +48,17 @@ function shuffle(array) {
  *    + increment the move counter and display it on the page (put this functionality in another function that you call from this one)
  *    + if all cards have matched, display a message with the final score (put this functionality in another function that you call from this one)
  */
+
+
+//display a card
+function displayCard () {
+	$(this).click(function () {
+		$(this).className = "card open show";
+	});
+ }
+
+
+ //add the card to open array
+ function addCard () {
+
+ }
