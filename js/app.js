@@ -60,6 +60,7 @@ function shuffle(array) {
 $(".restart").click(() => {
     location.reload();
     opened = [];
+    winCount = 0;
 });
 
 
@@ -67,19 +68,33 @@ $(".restart").click(() => {
 function displayCard () {
     $(".card").click(function () {
         let card = $(this).children().attr("class");
-        $(this).removeClass().addClass("card open show");
-        addCard(card);
+        $(this).addClass("open show");
+        if(opened.length % 2 === 0){
+            opened.push(card);
+        } else {
+            checkForMatch(card);
+        }
     });
  }
 
 
- //add the card to open array
- function addCard (card) {
-    opened.push(card);
+ //check if two cards match
+ function checkForMatch (theCard) {
+    let check = document.getElementsByClassName(theCard);
+    if(opened.includes(theCard)){
+       $(check).parent().addClass("card match");
+       winCount++;
+       opened.push(theCard);
+    } else {
+        let lastElement = document.getElementsByClassName(opened[opened.length - 1]);
+        setTimeout(function () {
+            $(check).parent().removeClass().addClass("card");
+            $(lastElement).parent().removeClass().addClass("card");
+        }, 500);
+        opened.pop();
+    }
+    
  }
 
 
-//check if the two cards match
-function checkForMatch () {
 
- }
