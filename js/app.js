@@ -1,9 +1,6 @@
 /*
  * Create a list that holds all of your cards
  */
-// let cards = ['diamond', 'paper-plane-o', 'anchor', 'bolt', 
-// 'cube', 'anchor', 'leaf', 'bicycle', 'diamond', 'bomb', 'leaf', 
-// 'bomb', 'bolt', 'bicycle', 'paper-plane-o', 'cube'];
 
 let cards = ['fa fa-diamond', 'fa fa-paper-plane-o', 'fa fa-anchor', 'fa fa-bolt', 
 'fa fa-cube', 'fa fa-anchor', 'fa fa-leaf', 'fa fa-bicycle', 'fa fa-diamond', 'fa fa-bomb', 'fa fa-leaf', 
@@ -59,6 +56,12 @@ function shuffle(array) {
  });
 
 
+//restart button
+$(".restart").click(() => {
+    location.reload();
+    opened = [];
+});
+
 
 //display a card
 function displayCard () {
@@ -73,9 +76,10 @@ function displayCard () {
  //add the card to open array
  function addCard (card) {
     opened.push(card);
-    console.log(opened);
  }
 
- function checkForMatch () {
-    
+
+//check if the two cards match
+function checkForMatch () {
+
  }
