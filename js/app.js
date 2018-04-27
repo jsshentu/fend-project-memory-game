@@ -16,8 +16,8 @@ let myCards = shuffle(cards);
 
 let opened = [];
 
-let winCount = 0;
-
+let moveCount = 0;
+console.log('outside', moveCount);
 //add cards dynamically
 for(let i = 0; i < myCards.length; i++){
     $(".deck").append('<li class="card"><i class="' + myCards[i] + '"></i></li>');
@@ -51,29 +51,30 @@ function shuffle(array) {
  *    + if all cards have matched, display a message with the final score (put this functionality in another function that you call from this one)
  */
 
- $(document).ready(function() {
-    displayCard();
- });
-
 
 //restart button
 $(".restart").click(() => {
     location.reload();
     opened = [];
-    winCount = 0;
+    moveCount = 0;
 });
 
 
-//display a card
-function displayCard () {
+//display a card and update socres
+function init () {
     $(".card").click(function () {
         let card = $(this).children().attr("class");
         $(this).addClass("open show");
+        moveCount++;
         if(opened.length % 2 === 0){
             opened.push(card);
         } else {
             checkForMatch(card);
         }
+        
+        changeMoves();
+
+        changeRating();
     });
  }
 
@@ -83,7 +84,6 @@ function displayCard () {
     let check = document.getElementsByClassName(theCard);
     if(opened.includes(theCard)){
        $(check).parent().addClass("card match");
-       winCount++;
        opened.push(theCard);
     } else {
         let lastElement = document.getElementsByClassName(opened[opened.length - 1]);
@@ -96,5 +96,33 @@ function displayCard () {
     
  }
 
+//update the moves
+function changeMoves() {
+    if(moveCount % 2 === 0){
+      $(".moves").text(function () {
+        return moveCount / 2;
+        });
+    }
+}
+
+
+//update the star rating
+function changeRating() {
+    if(moveCount / 2 === 12){
+       $('.stars li:first-child').hide();
+    } else if(moveCount / 2 === 20){
+        $('.stars li:nth-child(2)').hide();
+    }
+}
+
+
+//popup if win
+function popup() {
+    
+}
+
+$(document).ready(function() {
+    init();
+ });
 
 
