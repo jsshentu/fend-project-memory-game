@@ -58,13 +58,17 @@ function shuffle(array) {
 
 //restart button
 $(".restart").click(function() {
+    reset();
+});
+
+//reset the game
+function reset() {
     location.reload();
     opened = [];
     idArray = [];
     moveCount = 0;
     timeCount = 0;
-});
-
+}
 
 //display a card and update socres
 function init () {
@@ -85,6 +89,8 @@ function init () {
         if(moveCount === 1){
             changeTimer();
         }
+
+        popup();
     });
  }
 
@@ -150,7 +156,13 @@ function changeTimer() {
 //popup if win
 function popup() {
     if(opened.length === 16){
-
+        let numOfStars = document.getElementsByClassName('deck').length;
+        $(".timer").text(function() {
+            return timeCount;
+        });
+        if(window.confirm("Congratulations!\nYour moves: " + (moveCount / 2).toString() + ",\n" + "Your time: " + timeCount.toString() + " seconds,\n" + "Your star rating: " + numOfStars.toString() + ",\n" + "Do you want to play it agian?")){
+            reset();
+        }
     }
 }
 
