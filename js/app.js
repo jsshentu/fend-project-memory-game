@@ -16,13 +16,15 @@ let myCards = shuffle(cards);
 
 let opened = [];
 
+let idArray = [];
+
 let moveCount = 0;
 
 let timeCount = 0;
 
 //add cards dynamically
 for(let i = 0; i < myCards.length; i++){
-    $(".deck").append('<li class="card" id="count"><i class="' + myCards[i] + '"></i></li>');
+    $(".deck").append('<li class="card"><i class="' + myCards[i] + '" id="' + i +'"></i></li>');
 }
 
 
@@ -55,9 +57,10 @@ function shuffle(array) {
 
 
 //restart button
-$(".restart").click(() => {
+$(".restart").click(function() {
     location.reload();
     opened = [];
+    idArray = [];
     moveCount = 0;
     timeCount = 0;
 });
@@ -65,8 +68,8 @@ $(".restart").click(() => {
 
 //display a card and update socres
 function init () {
-    $(".card").click(function () {
-        let card = $(this).children().attr("class");
+    $(".card").click(function() {
+        let card = $(this).children().attr("id");
         $(this).addClass("open show");
         moveCount++;
         if(opened.length % 2 === 0){
@@ -74,35 +77,42 @@ function init () {
         } else {
             checkForMatch(card);
         }
-        
+
         changeMoves();
 
         changeRating();
 
-        //changeTimer();
+        if(moveCount === 1){
+            changeTimer();
+        }
     });
  }
 
 
 //add a card to opened array
 function addCard(theCard) {
-    opened.push(theCard);
+    let clsName = document.getElementById(theCard).className;
+    opened.push(clsName);
+    idArray.push(theCard);
 }
 
 
  //check if two cards match
  function checkForMatch (theCard) {
-    let check = document.getElementsByClassName(theCard);
-    if(opened.includes(theCard)){
-       $(check).parent().addClass("card match");
-       opened.push(theCard);
+    let cName = document.getElementById(theCard).className;
+    let match = document.getElementsByClassName(cName);
+    if(opened.includes(cName) && !idArray.includes(theCard)){
+        opened.push(cName);
+        console.log(opened.length);
+       $(match).parent().addClass("card match");
     } else {
         let lastElement = document.getElementsByClassName(opened[opened.length - 1]);
-        setTimeout(function () {
-            $(check).parent().removeClass().addClass("card");
+        setTimeout(function() {
+            $(match).parent().removeClass().addClass("card");
             $(lastElement).parent().removeClass().addClass("card");
         }, 500);
         opened.pop();
+        idArray.pop();
     }
     
  }
@@ -110,7 +120,7 @@ function addCard(theCard) {
 //update the moves
 function changeMoves() {
     if(moveCount % 2 === 0){
-      $(".moves").text(function () {
+      $(".moves").text(function() {
         return moveCount / 2;
         });
     }
@@ -129,25 +139,23 @@ function changeRating() {
 
 //update the timer
 function changeTimer() {
-    setInterval(() => {
-        $(".timer").text(() => {
-            timeCount++;
-            return timeCount;
-        });
+    setInterval(function() {
+      $(".timer").text(function() {
+        timeCount++;
+        return timeCount;
+       });
     }, 1000);
 }
 
 //popup if win
 function popup() {
-    
+    if(opened.length === 16){
+
+    }
 }
 
 $(document).ready(function() {
     init();
-    $("#count").click(() => {
-        changeTimer();
-
-    });
  });
 
 
