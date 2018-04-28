@@ -2,7 +2,7 @@
  * Create a list that holds all of your cards
  */
 
-let cards = ['fa fa-diamond', 'fa fa-paper-plane-o', 'fa fa-anchor', 'fa fa-bolt', 
+const cards = ['fa fa-diamond', 'fa fa-paper-plane-o', 'fa fa-anchor', 'fa fa-bolt', 
 'fa fa-cube', 'fa fa-anchor', 'fa fa-leaf', 'fa fa-bicycle', 'fa fa-diamond', 'fa fa-bomb', 'fa fa-leaf', 
 'fa fa-bomb', 'fa fa-bolt', 'fa fa-bicycle', 'fa fa-paper-plane-o', 'fa fa-cube'];
 
@@ -17,10 +17,12 @@ let myCards = shuffle(cards);
 let opened = [];
 
 let moveCount = 0;
-console.log('outside', moveCount);
+
+let timeCount = 0;
+
 //add cards dynamically
 for(let i = 0; i < myCards.length; i++){
-    $(".deck").append('<li class="card"><i class="' + myCards[i] + '"></i></li>');
+    $(".deck").append('<li class="card" id="count"><i class="' + myCards[i] + '"></i></li>');
 }
 
 
@@ -57,6 +59,7 @@ $(".restart").click(() => {
     location.reload();
     opened = [];
     moveCount = 0;
+    timeCount = 0;
 });
 
 
@@ -67,7 +70,7 @@ function init () {
         $(this).addClass("open show");
         moveCount++;
         if(opened.length % 2 === 0){
-            opened.push(card);
+            addCard(card);
         } else {
             checkForMatch(card);
         }
@@ -75,8 +78,16 @@ function init () {
         changeMoves();
 
         changeRating();
+
+        //changeTimer();
     });
  }
+
+
+//add a card to opened array
+function addCard(theCard) {
+    opened.push(theCard);
+}
 
 
  //check if two cards match
@@ -109,12 +120,22 @@ function changeMoves() {
 //update the star rating
 function changeRating() {
     if(moveCount / 2 === 12){
-       $('.stars li:first-child').hide();
+       $('.stars li:first-child').remove();
     } else if(moveCount / 2 === 20){
-        $('.stars li:nth-child(2)').hide();
+        $('.stars li:nth-child(2)').remove();
     }
 }
 
+
+//update the timer
+function changeTimer() {
+    setInterval(() => {
+        $(".timer").text(() => {
+            timeCount++;
+            return timeCount;
+        });
+    }, 1000);
+}
 
 //popup if win
 function popup() {
@@ -123,6 +144,10 @@ function popup() {
 
 $(document).ready(function() {
     init();
+    $("#count").click(() => {
+        changeTimer();
+
+    });
  });
 
 
