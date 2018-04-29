@@ -100,6 +100,7 @@ function addCard(theCard) {
     let clsName = document.getElementById(theCard).className;
     opened.push(clsName);
     idArray.push(theCard);
+    console.log(idArray);
 }
 
 
@@ -109,7 +110,7 @@ function addCard(theCard) {
     let match = document.getElementsByClassName(cName);
     if(opened.includes(cName) && !idArray.includes(theCard)){
         opened.push(cName);
-        console.log(opened.length);
+        idArray.push(theCard);
        $(match).parent().addClass("card match");
     } else {
         let lastElement = document.getElementsByClassName(opened[opened.length - 1]);
@@ -155,14 +156,18 @@ function changeTimer() {
 
 //popup if win
 function popup() {
-    if(opened.length === 16){
+    if(idArray.length === 16){
         let numOfStars = document.getElementsByClassName('deck').length;
-        $(".timer").text(function() {
-            return timeCount;
+        let winTime = timeCount;
+        $('#stop').removeClass();
+        $("#stop").text(function() {
+            return winTime;
         });
-        if(window.confirm("Congratulations!\nYour moves: " + (moveCount / 2).toString() + ",\n" + "Your time: " + timeCount.toString() + " seconds,\n" + "Your star rating: " + numOfStars.toString() + ",\n" + "Do you want to play it agian?")){
-            reset();
-        }
+        setTimeout(function() {
+            if(window.confirm("Congratulations!\nYour moves: " + (moveCount / 2).toString() + ",\n" + "Your time: " + winTime.toString() + " seconds,\n" + "Your star rating: " + numOfStars.toString() + ",\n" + "Do you want to play it agian?")){
+             reset();
+            }
+        }, 100);  
     }
 }
 
