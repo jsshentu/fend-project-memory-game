@@ -22,6 +22,10 @@ let moveCount = 0;
 
 let timeCount = 0;
 
+let moveArray = [];
+
+let kickOff = 0;
+
 //add cards dynamically
 for(let i = 0; i < myCards.length; i++){
     $(".deck").append('<li class="card"><i class="' + myCards[i] + '" id="' + i +'"></i></li>');
@@ -66,6 +70,7 @@ function reset() {
     location.reload();
     opened = [];
     idArray = [];
+    moveArray = [];
     moveCount = 0;
     timeCount = 0;
 }
@@ -75,18 +80,17 @@ function init () {
     $(".card").click(function() {
         let card = $(this).children().attr("id");
         $(this).addClass("open show");
-        moveCount++;
+        kickOff++;
+        changeMoves(card);
         if(opened.length % 2 === 0){
             addCard(card);
         } else {
             checkForMatch(card);
         }
 
-        changeMoves();
-
         changeRating();
 
-        if(moveCount === 1){
+        if(kickOff === 1){
             changeTimer();
         }
 
@@ -100,7 +104,6 @@ function addCard(theCard) {
     let clsName = document.getElementById(theCard).className;
     opened.push(clsName);
     idArray.push(theCard);
-    console.log(idArray);
 }
 
 
@@ -125,20 +128,37 @@ function addCard(theCard) {
  }
 
 //update the moves
-function changeMoves() {
-    if(moveCount % 2 === 0){
-      $(".moves").text(function() {
-        return moveCount / 2;
-        });
+function changeMoves(theCard) {
+    moveArray.push(theCard);
+    if(moveArray.length === 2){
+        if(moveArray[0] === moveArray[1]){
+            moveArray = [];
+        } else {
+            moveCount = moveCount + 2;
+            $(".moves").text(function() {
+                return moveCount / 2;
+            });
+            moveArray = [];
+        }
     }
+
+
+
+    // if(moveCount % 2 === 0){
+    //     if(!idArray.includes(theCard)){
+    //         $(".moves").text(function() {
+    //     return moveCount / 2;
+    //     });
+    //     }
+    // }
 }
 
 
 //update the star rating
 function changeRating() {
-    if(moveCount / 2 === 12){
+    if(kickOff / 2 === 15){
        $('.stars li:first-child').remove();
-    } else if(moveCount / 2 === 20){
+    } else if(kickOff / 2 === 25){
         $('.stars li:nth-child(2)').remove();
     }
 }
@@ -157,7 +177,12 @@ function changeTimer() {
 //popup if win
 function popup() {
     if(idArray.length === 16){
-        let numOfStars = document.getElementsByClassName('deck').length;
+        let numOfStars = 3;
+        if(moveCount / 2 >= 15 && moveCount / 2 < 25){
+            numOfStars = 2;
+        } else if(moveCount / 2 >= 25){
+            numOfStars = 1;
+        }
         let winTime = timeCount;
         $('#stop').removeClass();
         $("#stop").text(function() {
