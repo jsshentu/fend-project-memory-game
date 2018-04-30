@@ -108,6 +108,50 @@ h1 {
     cursor: pointer;
 }
 
-.moves, .timer, #stop{
+.moves, .timer, #stop, .restart{
     margin-left: 25px
+}
+
+@media screen and (max-width: 599px) {
+    h1 {
+        font-size: 150%;
+    }
+
+    .score-panel {
+        left: 50%;
+        right: 50%;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .moves, .timer, #stop,{
+        margin-left: 10px
+    }
+
+    .deck {
+        width: 330px;
+        min-height: 340px;
+        padding: 16px;
+    }
+
+    .deck .card {
+        width: 62.5px;
+        height: 62.5px;
+    }
+
+}
+
+@media screen and (min-width: 600px) and (max-width: 850px){
+    .deck {
+        width: 462px;
+        min-height: 476px;
+        padding: 22px;
+    }
+
+    .deck .card {
+        width: 87.5px;
+        height: 87.5px;
+    }
 }
