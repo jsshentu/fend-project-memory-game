@@ -3,18 +3,14 @@
 ## Table of Contents
 
 * [Instructions](#instructions)
-* [Contributing](#contributing)
 
-## Instructions
+## Instructions on how to play the game
 
-The starter project has some HTML and CSS styling to display a static version of the Memory Game project. You'll need to convert this project from a static project to an interactive one. This will require modifying the HTML and CSS files, but primarily the JavaScript file.
+This game has a star rating, and it is calculated based on the moves you make. Click each card to display the symbol, and there are 8 symbols, you will need to match them.
 
-To get started, open `js/app.js` and start building out the app's functionality
+If your have less than 15 moves, then you have 3 stars which is the highest.
 
-For specific, detailed instructions, look at the project instructions in the [Udacity Classroom](https://classroom.udacity.com/me).
+If you have more than 15 moves, but less than 25, then you have 2 stars.
 
-## Contributing
+Anything above 25 would be 1 star.
 
-This repository is the starter code for _all_ Udacity students. Therefore, we most likely will not accept pull requests.
-
-For details, check out [CONTRIBUTING.md](CONTRIBUTING.md).
