@@ -73,6 +73,7 @@ function reset() {
     moveArray = [];
     moveCount = 0;
     timeCount = 0;
+    kickOff = 0;
 }
 
 //display a card and update socres
